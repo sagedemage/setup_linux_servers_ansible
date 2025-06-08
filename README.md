@@ -1,5 +1,5 @@
 # setup_linux_servers_ansible
-Setup linux servers via Ansible.
+Setup Linux servers via Ansible.
 
 ## Installation 
 
