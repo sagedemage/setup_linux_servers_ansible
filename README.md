@@ -72,3 +72,25 @@ Gather facts about a particular target system
 ansible all -m gather_facts --limit 192.168.56.1
 ```
 
+## Running Elevated Commands with Ansible
+
+Make ansible use sudo with --ask-become-pass
+```
+ansible all -m apt -a update_cache=true --become --ask-become-pass
+```
+
+Install the vim package via the apt module
+```
+ansible all -m apt -a name=vim --become --ask-become-pass
+```
+
+Install the snapd package and make sure it's the latest version available
+```
+ansible all -m apt -a "name=snapd state=latest" --become --ask-become-pass
+```
+
+Upgrade all the package updates that are available via apt
+```
+ansible all -m apt -a upgrade=dist --become --ask-become-pass
+```
+
