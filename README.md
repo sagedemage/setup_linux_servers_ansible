@@ -94,3 +94,9 @@ Upgrade all the package updates that are available via apt
 ansible all -m apt -a upgrade=dist --become --ask-become-pass
 ```
 
+## Writing and Running an Ansible Playbook
+
+Run a playbook
+```
+ansible-playbook --ask-become-pass install_apache.yml
+```
