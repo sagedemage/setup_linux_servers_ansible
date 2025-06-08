@@ -107,6 +107,11 @@ Get the information of the Operating System on Linux
 cat /etc/os-release
 ```
 
+Allow port 80 on CentOS
+```
+sudo firewall-cmd --add-port=80/tcp
+```
+
 ## The When Conditional
 Get the ansible_distribution information for a Linux server
 ```
