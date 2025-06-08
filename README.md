@@ -54,11 +54,17 @@ ansible all -m ping
 ```
 
 ### List all of the hosts
+```
 ansible all --list-hosts
+```
 
 ### Gather facts about the target systems
+```
 ansible all -m gather_facts
+```
 
 ### Gather facts about a particular target system
+```
 ansible all -m gather_facts --limit 192.168.56.1
+```
 
