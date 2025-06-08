@@ -100,3 +100,10 @@ Run a playbook
 ```
 ansible-playbook --ask-become-pass install_apache.yml
 ```
+
+## Linux Terminal Tips and Tricks
+Get the information of the Operating System on Linux
+```
+cat /etc/os-release
+```
+
