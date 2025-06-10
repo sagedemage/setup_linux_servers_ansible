@@ -129,3 +129,16 @@ List the running virtual machines
 vboxmanage list runningvms
 ```
 
+## Ansible Tags
+List available tags in a playbook
+```
+ansible-playbook --list-tags site.yml
+```
+
+Running a playbook while targeting specific tags
+```
+ansible-playbook --tags db --ask-become-pass site.yml
+ansible-playbook --tags centos --ask-become-pass site.yml
+ansible-playbook --tags apache --ask-become-pass site.yml
+```
+
