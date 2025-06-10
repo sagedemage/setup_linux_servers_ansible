@@ -118,3 +118,14 @@ Get the ansible_distribution information for a Linux server
 ansible all -m gather_facts --limit 192.168.56.1 | grep ansible_distribution
 ```
 
+## Virtual Box Commands
+List virtual machines and their UUID
+```
+vboxmanage list vms
+```
+
+List the running virtual machines
+```
+vboxmanage list runningvms
+```
+
