@@ -142,3 +142,8 @@ ansible-playbook --tags centos --ask-become-pass site.yml
 ansible-playbook --tags apache --ask-become-pass site.yml
 ```
 
+Running a playbook while specifying multiple tags
+```
+ansible-playbook --tags "apache,db" --ask-become-pass site.yml
+```
+
