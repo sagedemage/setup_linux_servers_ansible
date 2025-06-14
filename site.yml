@@ -77,3 +77,48 @@
         name: samba
         state: latest
 
+- hosts: nginx_servers
+  become: true
+  vars:
+    home_path: "/home/sage"
+  tasks:
+
+    - name: install dependencies
+      dnf:
+        name:
+          - gcc
+          - make
+          - pcre2-devel
+          - zlib-devel
+          - openssl-devel
+        state: latest
+
+    - name: create nginx directory
+      file:
+        path: "{{ home_path }}/nginx-1.28.0"
+        state: directory
+        mode: "0755"
+
+    - name: extract Nginx source code
+      unarchive:
+        src: https://github.com/nginx/nginx/releases/download/release-1.28.0/nginx-1.28.0.tar.gz
+        dest: "{{ home_path }}"
+        remote_src: yes
+
+    - name: run configure script
+      shell: ./configure
+      args:
+        chdir: "{{ home_path }}/nginx-1.28.0"
+
+    - name: build the default target
+      make:
+        chdir: "{{ home_path }}/nginx-1.28.0"
+
+    - name: run 'install' target as root
+      make:
+        chdir: "{{ home_path }}/nginx-1.28.0"
+        target: install
+        params:
+          NUM_THREADS: 2
+      become: yes
+
