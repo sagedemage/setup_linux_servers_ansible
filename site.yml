@@ -84,6 +84,7 @@
   tasks:
 
     - name: install dependencies
+      tags: nginx,centos
       dnf:
         name:
           - gcc
@@ -95,6 +96,7 @@
       when: ansible_distribution == "CentOS"
 
     - name: create nginx directory
+      tags: nginx,centos
       file:
         path: "{{ home_path }}/nginx-1.28.0"
         state: directory
@@ -102,6 +104,7 @@
       when: ansible_distribution == "CentOS"
 
     - name: extract Nginx source code
+      tags: nginx,centos
       unarchive:
         src: https://github.com/nginx/nginx/releases/download/release-1.28.0/nginx-1.28.0.tar.gz
         dest: "{{ home_path }}"
@@ -109,17 +112,20 @@
       when: ansible_distribution == "CentOS"
 
     - name: run configure script
+      tags: nginx,centos
       shell: ./configure
       args:
         chdir: "{{ home_path }}/nginx-1.28.0"
       when: ansible_distribution == "CentOS"
 
     - name: build the default target
+      tags: nginx,centos
       make:
         chdir: "{{ home_path }}/nginx-1.28.0"
       when: ansible_distribution == "CentOS"
 
     - name: run 'install' target as root
+      tags: nginx,centos
       make:
         chdir: "{{ home_path }}/nginx-1.28.0"
         target: install
