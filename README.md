@@ -27,7 +27,7 @@ ssh-keygen -t ed25519 -C "salmaan default"
 
 Copy the linux servers ssh key to the linux servers. Replace the ip address to the ip address of the linux servers.
 ```
-ssh-copy-id -i -p 2222 ~/.ssh/linux_servers_ansible.pub sage@192.168.56.1
+ssh-copy-id -p 2222 -i ~/.ssh/linux_servers_ansible.pub sage@192.168.56.1
 ```
 
 Check if performing ssh to the linux servers occurs automatically without a password confirmation
