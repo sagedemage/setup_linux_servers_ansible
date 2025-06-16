@@ -144,18 +144,24 @@
         remote_src: yes
       when: ansible_distribution == "CentOS"
 
+    - name: Check if nginx is installed
+      command: ls /usr/local/nginx/sbin/nginx
+      when: ansible_distribution == "CentOS"
+      register: nginx_binary_path
+      changed_when: False
+
     - name: run configure script
       tags: nginx,centos
       shell: ./configure
       args:
         chdir: "{{ home_path }}/nginx-1.28.0"
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "CentOS" and nginx_binary_path.stdout != "/usr/local/nginx/sbin/nginx"
 
     - name: build the default target
       tags: nginx,centos
       make:
         chdir: "{{ home_path }}/nginx-1.28.0"
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "CentOS" and nginx_binary_path.stdout != "/usr/local/nginx/sbin/nginx"
 
     - name: run 'install' target as root
       tags: nginx,centos
@@ -165,5 +171,5 @@
         params:
           NUM_THREADS: 2
       become: yes
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "CentOS" and nginx_binary_path.stdout != "/usr/local/nginx/sbin/nginx"
 
