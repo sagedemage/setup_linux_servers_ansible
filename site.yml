@@ -57,6 +57,22 @@
         state: latest
       when: ansible_distribution == "Ubuntu"
 
+    - name: change the log level (CentOS)
+      tags: apache,centos,httpd
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "^LogLevel"
+        line: LogLevel error
+      when: ansible_distribution == "CentOS"
+      register: httpd
+
+    - name: restart httpd (CentOS)
+      tags: apache,centos,httpd
+      service:
+        name: httpd
+        state: restarted
+      when: httpd.changed
+
     - name: copy html file for the site
       tags: apache,apache2,httpd
       copy:
