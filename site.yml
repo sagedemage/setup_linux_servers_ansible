@@ -18,6 +18,32 @@
       changed_when: false
       when: ansible_distribution == "Ubuntu"
 
+- hosts: all
+  become: true
+  tasks:
+
+  - name: create canute user
+    tags: always
+    user:
+      name: canute
+      shell: /bin/bash
+      groups: root
+
+  - name: add ssh key for canute
+    tags: always
+    authorized_key:
+      user: canute
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0vhueEfT4sVzWxVGD0TcKY4wqFp+rylAq4d/3b24Qk ansible"
+
+  - name: add sudoers file for canute
+    tags: always
+    copy:
+      src: sudoer_canute
+      dest: /etc/sudoers.d/canute
+      owner: root
+      group: root
+      mode: 0440
+
 - hosts: web_servers
   become: true
   tasks:
