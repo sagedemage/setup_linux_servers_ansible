@@ -25,6 +25,7 @@
     - name: create canute user
       user:
         name: canute
+        shell: /bin/bash
         groups: root
 
     - name: add ssh key for canute
