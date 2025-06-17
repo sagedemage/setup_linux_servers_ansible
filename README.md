@@ -112,6 +112,16 @@ Allow port 80 on CentOS
 sudo firewall-cmd --add-port=80/tcp
 ```
 
+List all users
+```
+compgen -u
+```
+
+List last 20 users
+```
+tail -n 20 /etc/passwd
+```
+
 ## The When Conditional
 Get the ansible_distribution information for a Linux server
 ```
