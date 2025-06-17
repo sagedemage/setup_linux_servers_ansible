@@ -2,7 +2,6 @@
 Setup Linux servers via Ansible.
 
 ## Installation 
-
 Install the ansible package on Fedora
 ```
 sudo dnf install ansible
@@ -19,7 +18,6 @@ sudo dnf install openssh-server
 ```
 
 ## Setup SSH Keys
-
 Create ssh key for the linux servers
 ```
 ssh-keygen -t ed25519 -C "salmaan default"
@@ -51,7 +49,6 @@ ssh -p 2222 -i ~/.ssh/ansible 192.168.56.1
 ```
 
 ## Setup and configure Ansible
-
 Ping all of the hosts
 ```
 ansible all -m ping
@@ -73,7 +70,6 @@ ansible all -m gather_facts --limit 192.168.56.1
 ```
 
 ## Running Elevated Commands with Ansible
-
 Make ansible use sudo with --ask-become-pass
 ```
 ansible all -m apt -a update_cache=true --become --ask-become-pass
@@ -95,10 +91,14 @@ ansible all -m apt -a upgrade=dist --become --ask-become-pass
 ```
 
 ## Writing and Running an Ansible Playbook
-
-Run a playbook
+Run the bootstrap playbook
 ```
-ansible-playbook --ask-become-pass install_apache.yml
+ansible-playbook --ask-become-pass bootstrap.yml
+```
+
+Run the site playbook
+```
+ansible-playbook site.yml
 ```
 
 ## Linux Terminal Tips and Tricks
