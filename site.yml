@@ -24,27 +24,11 @@
     - vars/ssh_canute.yml
   tasks:
 
-  - name: create canute user
-    tags: always
-    user:
-      name: canute
-      shell: /bin/bash
-      groups: root
-
   - name: add ssh key for canute
     tags: always
     authorized_key:
       user: canute
       key: "{{ ssh_key }}"
-
-  - name: add sudoers file for canute
-    tags: always
-    copy:
-      src: sudoer_canute
-      dest: /etc/sudoers.d/canute
-      owner: root
-      group: root
-      mode: 0440
 
 - hosts: web_servers
   become: true
