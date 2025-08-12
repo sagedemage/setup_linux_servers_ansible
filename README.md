@@ -157,3 +157,57 @@ Running a playbook while specifying multiple tags
 ansible-playbook --tags "apache,db" --ask-become-pass site.yml
 ```
 
+## VirtualBox Conflicts with KVM (Linux)
+
+### Disable KVM for the Current Session
+
+You should disable the kvm modules for VirtualBox to work on Linux.
+
+If you are using an Intel CPU, disable the `kvm_intel` module
+```
+sudo modprobe -r kvm_intel
+```
+
+If you are using an AMD CPU, disable the `kvm_amd` module
+```
+sudo modprobe -r kvm_amd
+```
+
+Check the kvm modules is disabled
+```
+lsmod | grep kvm
+```
+
+You should see no output
+
+### Disable KVM Permanently
+
+If you want to disable the kvm modules permanently, create the `/etc/modprobe.d/blacklist.conf` file
+```
+sudo touch /etc/modprobe.d/blacklist.conf
+```
+
+Open the  `/etc/modprobe.d/blacklist.conf` file
+```
+sudo vim /etc/modprobe.d/blacklist.conf
+```
+
+The `/etc/modprobe.d/blacklist.conf` file should look like this
+```
+blacklist kvm_intel
+```
+
+If you are using an AMD CPU, replace `kvm_intel` with `kvm_amd`
+
+Reboot the PC and the kvm modules should not be running
+
+Check the kvm modules is disabled
+```
+lsmod | grep kvm
+```
+
+You should see no output
+
+## Resources
+- [Ansible community documentation - Ansible](https://docs.ansible.com/)
+- [VirtualBox can't operate in VMX mode - superuser](https://superuser.com/questions/1845776/virtualbox-cant-operate-in-vmx-mode)
