@@ -81,7 +81,7 @@ The file path for the private key should be:
 /home/salmaan/.ssh/linux_servers_ansible
 ```
 
-Copy the linux servers ssh key to the linux servers. Replace the ip address to the ip address of the linux servers.
+Copy the linux servers ssh key to the linux servers. Replace the IP address to the IP address of the linux servers.
 ```
 ssh-copy-id -p 2222 -i ~/.ssh/linux_servers_ansible.pub sage@192.168.56.1
 ```
@@ -103,7 +103,7 @@ The file path for the private key should be:
 /home/salmaan/.ssh/ansible
 ```
 
-Copy the ansible ssh key to the linux servers. Replace the ip address to the ip address of the linux servers.
+Copy the ansible ssh key to the linux servers. Replace the IP address to the IP address of the linux servers.
 ```
 ssh-copy-id -p 2222 -i ~/.ssh/ansible.pub sage@192.168.56.1
 ```
