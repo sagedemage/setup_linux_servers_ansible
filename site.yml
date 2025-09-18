@@ -4,12 +4,12 @@
   become: true
   pre_tasks:
 
-    - name: update repository index (CentOS)
+    - name: update repository index (Debian)
       tags: always
-      dnf:
+      apt:
         update_cache: yes
       changed_when: false
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "Debian"
       
     - name: update repository index (Ubuntu)
       tags: always
@@ -34,31 +34,22 @@
   become: true
   tasks:
       
-    - name: install apache and php packages (CentOS)
-      tags: apache,centos,httpd
-      dnf:
+    - name: install apache and php packages (Debian)
+      tags: apache,debian,
+      apt:
         name:
-          - httpd
+          - apache2
           - php
         state: latest
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "Debian"
 
-    - name: start and enable httpd (CentOS)
-      tags: apache,centos,httpd
+    - name: start and enable apache2 (Debian)
+      tags: apache,debian,
       service:
-        name: httpd
+        name: apache2
         state: started
         enabled: yes
-      when: ansible_distribution == "CentOS"
-
-    - name: configure the firewall to allow port 80 (CentOS)
-      tags: apache,centos,httpd
-      firewalld:
-        port: 80/tcp
-        permanent: true
-        immediate: true
-        state: enabled
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "Debian"
 
     - name: install apache2 and php packages (Ubuntu)
       tags: apache,apache2,ubuntu
@@ -69,24 +60,24 @@
         state: latest
       when: ansible_distribution == "Ubuntu"
 
-    - name: change the log level (CentOS)
-      tags: apache,centos,httpd
+    - name: change the log level (Debian)
+      tags: apache,debian,
       lineinfile:
-        path: /etc/httpd/conf/httpd.conf
+        path: /etc/apache2/apache2.conf
         regexp: "^LogLevel"
         line: LogLevel error
-      when: ansible_distribution == "CentOS"
-      register: httpd
+      when: ansible_distribution == "Debian"
+      register: apache2
 
-    - name: restart httpd (CentOS)
-      tags: apache,centos,httpd
+    - name: restart apache2 (Debian)
+      tags: apache,debian,
       service:
-        name: httpd
+        name: apache2
         state: restarted
-      when: httpd.changed
+      when: apache2.changed
 
     - name: copy html file for the site
-      tags: apache,apache2,httpd
+      tags: apache,apache2,
       copy:
         src: default_site.html
         dest: /var/www/html/index.html
@@ -98,12 +89,12 @@
   become: true
   tasks:
 
-    - name: install mariadb package (CentOS)
-      tags: centos,db,mariadb
-      dnf:
+    - name: install mariadb package (Debian)
+      tags: debian,db,mariadb
+      apt:
         name: mariadb
         state: latest
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "Debian"
 
     - name: install mariadb server package (Ubuntu)
       tags: db,mariadb,ubuntu
@@ -122,66 +113,4 @@
         name: samba
         state: latest
 
-- hosts: nginx_servers
-  become: true
-  vars:
-    home_path: "/home/sage"
-  tasks:
-
-    - name: install dependencies
-      tags: nginx,centos
-      dnf:
-        name:
-          - gcc
-          - make
-          - pcre2-devel
-          - zlib-devel
-          - openssl-devel
-        state: latest
-      when: ansible_distribution == "CentOS"
-
-    - name: create nginx directory
-      tags: nginx,centos
-      file:
-        path: "{{ home_path }}/nginx-1.28.0"
-        state: directory
-        mode: "0755"
-      when: ansible_distribution == "CentOS"
-
-    - name: extract Nginx source code
-      tags: nginx,centos
-      unarchive:
-        src: https://github.com/nginx/nginx/releases/download/release-1.28.0/nginx-1.28.0.tar.gz
-        dest: "{{ home_path }}"
-        remote_src: yes
-      when: ansible_distribution == "CentOS"
-
-    - name: Check if nginx is installed
-      command: ls /usr/local/nginx/sbin/nginx
-      when: ansible_distribution == "CentOS"
-      register: nginx_binary_path
-      changed_when: False
-
-    - name: run configure script
-      tags: nginx,centos
-      shell: ./configure
-      args:
-        chdir: "{{ home_path }}/nginx-1.28.0"
-      when: ansible_distribution == "CentOS" and nginx_binary_path.stdout != "/usr/local/nginx/sbin/nginx"
-
-    - name: build the default target
-      tags: nginx,centos
-      make:
-        chdir: "{{ home_path }}/nginx-1.28.0"
-      when: ansible_distribution == "CentOS" and nginx_binary_path.stdout != "/usr/local/nginx/sbin/nginx"
-
-    - name: run 'install' target as root
-      tags: nginx,centos
-      make:
-        chdir: "{{ home_path }}/nginx-1.28.0"
-        target: install
-        params:
-          NUM_THREADS: 2
-      become: yes
-      when: ansible_distribution == "CentOS" and nginx_binary_path.stdout != "/usr/local/nginx/sbin/nginx"
 
