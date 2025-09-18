@@ -4,12 +4,12 @@
   become: true
   pre_tasks:
 
-    - name: install updates (CentOS)
+    - name: install updates (Debian)
       tags: always
-      dnf:
-        update_only: yes
+      apt:
+        upgrade: dist
         update_cache: yes
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "Debian"
 
     - name: install updates (Ubuntu)
       tags: always

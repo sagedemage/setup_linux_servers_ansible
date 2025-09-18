@@ -13,11 +13,11 @@
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
       
-    - name: install apache and php packages for CentOS servers
+    - name: install apache and php packages for Debian servers
       dnf:
         name:
-          - httpd
-          - php
+          - apache2
+          - libapache2-mod-php
         state: latest
         update_cache: yes
-      when: ansible_distribution == "CentOS"
+      when: ansible_distribution == "Debian"
