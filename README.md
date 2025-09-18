@@ -8,28 +8,28 @@ Ubuntu Server 1:
 - Name: Web Server 1
 - IP Address: 192.168.56.1
 	- Attached to: Host-only Adapter
-	- Name vboxnet0
+	- Name: vboxnet0
 - OS: Ubuntu Server
 
 Ubuntu Server 2:
 - Name: DB Server
 - IP Address: 192.168.57.1
 	- Attached to: Host-only Adapter
-	- Name vboxnet1
+	- Name: vboxnet1
 - OS: Ubuntu Server
 
 Ubuntu Server 3:
 - Name: File Server
 - IP Address: 192.168.58.1
 	- Attached to: Host-only Adapter
-	- Name vboxnet2
+	- Name: vboxnet2
 - OS: Ubuntu Server
 
 Debian Server 1:
 - Name: Web Server 2
 - IP Address: 192.168.59.1
 	- Attached to: Host-only Adapter
-	- Name vboxnet3
+	- Name: vboxnet3
 - OS: Debian
 
 ## Virtual Machine Setup
